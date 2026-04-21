@@ -11,6 +11,13 @@ services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 services.AddOpenApi();
 
+services.AddDbContext<SqlDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("GoodHamburger.Infrastructure")
+    )
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
