@@ -1,10 +1,15 @@
+using GoodHamburger.Infrastructure.Contexts;
+using GoodHamburguer.API.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var services = builder.Services;
 
-builder.Services.AddControllers();
+services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+services.AddOpenApi();
 
 var app = builder.Build();
 

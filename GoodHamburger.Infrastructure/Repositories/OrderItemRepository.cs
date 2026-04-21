@@ -1,13 +1,13 @@
 ﻿using GoodHamburger.Domain.Entities;
-using GoodHamburger.Domain.Interfaces.Repositories.Base;
+using GoodHamburger.Domain.Interfaces.Repositories;
 using GoodHamburger.Infrastructure.Contexts;
 using GoodHamburger.Infrastructure.Repositories.Base;
 
 namespace GoodHamburger.Infrastructure.Repositories;
 
-public class OrdemItemRepository : BaseRepository<OrderItem>, IOrderItemRepository
+public class OrderItemRepository : BaseRepository<OrderItem>, IOrderItemRepository
 {
-    public OrdemItemRepository(SqlDbContext context) : base(context)
+    public OrderItemRepository(SqlDbContext context) : base(context)
     {
     }
 }
