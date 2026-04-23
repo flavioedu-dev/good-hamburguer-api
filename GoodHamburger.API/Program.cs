@@ -1,5 +1,5 @@
 using GoodHamburger.Infrastructure.Contexts;
-using GoodHamburguer.API.Extensions;
+using GoodHamburger.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +19,8 @@ services.AddDbContext<SqlDbContext>(options =>
 );
 
 services.AddSwaggerGen();
+
+services.RegisterMappings();
 
 var app = builder.Build();
 

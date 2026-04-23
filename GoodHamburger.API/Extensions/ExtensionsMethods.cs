@@ -11,6 +11,11 @@ namespace GoodHamburger.API.Extensions;
 
 public static class ExtensionsMethods
 {
+    public static void RegisterMappings(this IServiceCollection services)
+    {
+        services.OrderRegisterMappings();
+    }
+
     public static void AddMiddlewares(this WebApplication app)
     {
         app.UseMiddleware<ExceptionHandlingMiddleware>();
