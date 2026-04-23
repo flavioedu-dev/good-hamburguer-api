@@ -11,6 +11,19 @@ namespace GoodHamburger.API.Extensions;
 
 public static class ExtensionsMethods
 {
+    public static void AddApplicationDI(this IServiceCollection services)
+    {
+        services.AddScoped<IOrderServices, OrderServices>();
+    }
+
+    public static void AddInfrastructureDI(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+    }
+
     public static void RegisterMappings(this IServiceCollection services)
     {
         services.OrderRegisterMappings();

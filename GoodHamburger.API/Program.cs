@@ -9,7 +9,6 @@ var services = builder.Services;
 
 services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-services.AddOpenApi();
 
 services.AddDbContext<SqlDbContext>(options =>
     options.UseNpgsql(
@@ -17,6 +16,9 @@ services.AddDbContext<SqlDbContext>(options =>
         b => b.MigrationsAssembly("GoodHamburger.Infrastructure")
     )
 );
+
+services.AddApplicationDI();
+services.AddInfrastructureDI();
 
 services.AddSwaggerGen();
 
@@ -27,9 +29,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
