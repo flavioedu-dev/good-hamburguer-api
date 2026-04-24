@@ -67,7 +67,7 @@ public class SqlDbContext : DbContext
                 Name = "Refrigerante",
                 Price = 2.50m,
                 Description = "Lata de refrigerante gelado.",
-                Category = ProductCategory.Side,
+                Category = ProductCategory.Drink,
                 Active = true,
                 CreatedAt = new DateTime(2024, 3, 21, 0, 0, 0, DateTimeKind.Utc),
                 UpdatedAt = null
