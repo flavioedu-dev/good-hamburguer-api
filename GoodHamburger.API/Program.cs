@@ -1,5 +1,7 @@
-using GoodHamburger.Infrastructure.Contexts;
+using FluentValidation;
 using GoodHamburger.API.Extensions;
+using GoodHamburger.API.Filters;
+using GoodHamburger.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var services = builder.Services;
 
-services.AddControllers();
+services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+services.AddScoped<ValidationFilter>();
+services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 services.AddDbContext<SqlDbContext>(options =>

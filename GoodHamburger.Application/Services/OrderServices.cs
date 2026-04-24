@@ -40,11 +40,11 @@ public class OrderServices : IOrderServices
         return orderResponseDTO;
     }
 
-    public async Task<OrderDTO> CreateAsync(List<CreateOrderDTO> createOrderDTOList)
+    public async Task<OrderDTO> CreateAsync(CreateOrderDTO createOrderDTO)
      {
         List<OrderItem> orderItems = [];
 
-        foreach (var orderItem in createOrderDTOList)
+        foreach (var orderItem in createOrderDTO.OrderItems)
         {
             var product = await _productRepository.GetByIdAsync(orderItem.ProductId)
                 ?? throw new CustomResponseException($"Produto com Id {orderItem.ProductId} não encontrado.", 404);

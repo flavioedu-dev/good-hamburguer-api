@@ -2,6 +2,5 @@
 
 public record CreateOrderDTO
 (
-    int ProductId, 
-    int Quantity
+    List<CreateOrderItemDTO> OrderItems
 );
