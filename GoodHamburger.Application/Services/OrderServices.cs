@@ -23,7 +23,7 @@ public class OrderServices : IOrderServices
 
     public async Task<List<OrderDTO>> GetAllAsync()
     {
-        var orders = await _orderRepository.GetAllAsync();
+        var orders = await _orderRepository.GetAllWithOrderItemsAsync();
 
         var orderResponseDTOList = orders.Adapt<List<OrderDTO>>();
 
@@ -32,7 +32,7 @@ public class OrderServices : IOrderServices
 
     public async Task<OrderDTO> GetByIdAsync(int id)
     {
-        var order = await _orderRepository.GetByIdAsync(id)
+        var order = await _orderRepository.GetByIdWithOrderItemsAsync(id)
             ?? throw new CustomResponseException($"Pedido com Id {id} não encontrado.", 404);
 
         var orderResponseDTO = order.Adapt<OrderDTO>();
