@@ -1,4 +1,5 @@
 ﻿using GoodHamburger.Application.DTOs.Orders;
+using GoodHamburger.Application.DTOs.Orders.Requests;
 using GoodHamburger.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,4 +31,13 @@ public class OrderController : ControllerBase
   
         return Ok(order);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<OrderDTO>> Create([FromBody] List<CreateOrderDTO> createOrderDTOList)
+    {
+        var created = await _orderServices.CreateAsync(createOrderDTOList);
+
+        return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
+    }
+
 }
