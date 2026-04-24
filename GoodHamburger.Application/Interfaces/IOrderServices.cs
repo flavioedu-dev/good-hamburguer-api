@@ -7,5 +7,5 @@ public interface IOrderServices
 {
     Task<List<OrderDTO>> GetAllAsync();
     Task<OrderDTO> GetByIdAsync(int id);
-    Task<OrderDTO> CreateAsync(List<CreateOrderDTO> createOrderDTOList);
+    Task<OrderDTO> CreateAsync(CreateOrderDTO createOrderDTO);
 }
