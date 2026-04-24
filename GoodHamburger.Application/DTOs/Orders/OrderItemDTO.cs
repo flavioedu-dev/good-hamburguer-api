@@ -7,7 +7,7 @@ public record OrderItemDTO
     int Id,
     int ProductId,
     string Name,
-    int Price,     
+    decimal Price,     
     ProductCategory Category,
     int Quantity,
     decimal Subtotal

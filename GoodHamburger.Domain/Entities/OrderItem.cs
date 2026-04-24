@@ -17,6 +17,6 @@ public class OrderItem : BaseEntity
 
     public void CalculateSubtotal()
     {
-        Subtotal = Price * Quantity;
+        Subtotal = Math.Round(Price * Quantity, 2, MidpointRounding.AwayFromZero);
     }
 }

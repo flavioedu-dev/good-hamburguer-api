@@ -12,12 +12,12 @@ public class Order : BaseEntity
     public void CalculateSubtotal()
     {
         OrderItems.ForEach(oi => oi.CalculateSubtotal());
-        Subtotal = OrderItems.Sum(oi => oi.Subtotal);
+        Subtotal = Math.Round(OrderItems.Sum(oi => oi.Subtotal), 2, MidpointRounding.AwayFromZero);
     }
 
     public void CalculateTotalPrice()
     {
         CalculateSubtotal();
-        TotalPrice = Subtotal - Discount;
+        TotalPrice = Math.Round(Subtotal - Discount, 2, MidpointRounding.AwayFromZero);
     }
 }

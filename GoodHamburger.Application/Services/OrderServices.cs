@@ -12,9 +12,13 @@ namespace GoodHamburger.Application.Services;
 public class OrderServices : IOrderServices
 {
     private readonly IOrderRepository _orderRepository;
-    public OrderServices(IOrderRepository orderRepository)
+    private readonly IProductRepository _productRepository;
+    private readonly IDiscountServices _discountServices;
+    public OrderServices(IOrderRepository orderRepository, IProductRepository productRepository, IDiscountServices discountServices)
     {
         _orderRepository = orderRepository;
+        _productRepository = productRepository;
+        _discountServices = discountServices;
     }
 
     public async Task<List<OrderDTO>> GetAllAsync()
@@ -35,4 +39,41 @@ public class OrderServices : IOrderServices
 
         return orderResponseDTO;
     }
+
+    public async Task<OrderDTO> CreateAsync(List<CreateOrderDTO> createOrderDTOList)
+     {
+        List<OrderItem> orderItems = [];
+
+        foreach (var orderItem in createOrderDTOList)
+        {
+            var product = await _productRepository.GetByIdAsync(orderItem.ProductId)
+                ?? throw new CustomResponseException($"Produto com Id {orderItem.ProductId} não encontrado.", 404);
+
+            var newOrderItem = product.Adapt<OrderItem>();
+            newOrderItem.Quantity = orderItem.Quantity;
+
+            orderItems.Add(newOrderItem);
+        }
+
+        var newOrder = new Order { OrderItems = orderItems };
+
+        newOrder.CalculateSubtotal();
+
+        var limitPerCategoryExceeded = newOrder.OrderItems
+            .GroupBy(item => item.Category);
+
+        if(newOrder.OrderItems.Any(item => item.Quantity > 1) || limitPerCategoryExceeded.Any(group => group.Count() > 1))
+            throw new CustomResponseException($"O pedido pode conter apenas um produto de cada categoria.", 400);
+
+        newOrder.Discount = _discountServices.CalculateDiscount(newOrder);
+
+        newOrder.CalculateTotalPrice();
+
+        await _orderRepository.CreateAsync(newOrder);
+        await _orderRepository.SaveAsync();
+
+        var orderCreatedDTO = newOrder.Adapt<OrderDTO>();
+        return orderCreatedDTO;
+    }
+
 }

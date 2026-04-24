@@ -3,7 +3,7 @@
 public record OrderDTO
 (
     int Id,
-    ICollection<OrderItemDTO> OrderItems,
+    List<OrderItemDTO> OrderItems,
     decimal Discount,
     decimal Subtotal,
     decimal TotalPrice

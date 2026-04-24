@@ -14,6 +14,7 @@ public static class ExtensionsMethods
     public static void AddApplicationDI(this IServiceCollection services)
     {
         services.AddScoped<IOrderServices, OrderServices>();
+        services.AddScoped<IDiscountServices, DiscountServices>();
     }
 
     public static void AddInfrastructureDI(this IServiceCollection services)
