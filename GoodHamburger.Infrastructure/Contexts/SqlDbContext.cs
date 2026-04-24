@@ -6,9 +6,9 @@ namespace GoodHamburger.Infrastructure.Contexts;
 
 public class SqlDbContext : DbContext
 {
-    public DbSet<Product> Products { get; }
-    public DbSet<OrderItem> OrderItems { get; }
-    public DbSet<Order> Orders { get; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
     public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options)
     {
