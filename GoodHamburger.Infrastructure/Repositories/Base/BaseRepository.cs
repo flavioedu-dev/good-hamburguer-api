@@ -1,4 +1,5 @@
 ﻿using GoodHamburger.Domain.Entities.Base;
+using GoodHamburger.Domain.Exceptions;
 using GoodHamburger.Domain.Interfaces.Repositories.Base;
 using GoodHamburger.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +48,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
 
     public async Task DeleteAsync(int id)
     {
-        var existsEntity = await GetByIdAsync(id) ?? throw new KeyNotFoundException($"Entidade com id {id} não encontrada.");
+        var existsEntity = await GetByIdAsync(id) ?? throw new CustomResponseException($"Entidade com id {id} não encontrada.", 404);
 
         _context.Set<TEntity>().Remove(existsEntity);
     }

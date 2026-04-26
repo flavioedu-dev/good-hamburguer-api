@@ -9,4 +9,5 @@ public interface IOrderServices
     Task<OrderDTO> GetByIdAsync(int id);
     Task<OrderDTO> CreateAsync(CreateOrderDTO createOrderDTO);
     Task UpdateAsync(int id, UpdateOrderDTO updateOrderDTO);
+    Task DeleteAsync(int id);
 }

@@ -17,7 +17,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<OrderDTO>>> Get()
+    public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAll()
     {
         var orders = await _orderServices.GetAllAsync();
 
@@ -37,7 +37,7 @@ public class OrderController : ControllerBase
     {
         var created = await _orderServices.CreateAsync(createOrderDTO);
 
-        return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
+        return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
@@ -46,4 +46,13 @@ public class OrderController : ControllerBase
         await _orderServices.UpdateAsync(id, updateOrderDTO);
 
         return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _orderServices.DeleteAsync(id);
+
+        return NoContent();
+    }
 }

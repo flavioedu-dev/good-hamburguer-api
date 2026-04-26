@@ -2,7 +2,6 @@
 using GoodHamburger.Application.DTOs.Orders.Requests;
 using GoodHamburger.Application.Interfaces;
 using GoodHamburger.Domain.Entities;
-using GoodHamburger.Domain.Enums;
 using GoodHamburger.Domain.Exceptions;
 using GoodHamburger.Domain.Interfaces.Repositories;
 using Mapster;
@@ -111,6 +110,12 @@ public class OrderServices : IOrderServices
         order.CalculateTotalPrice();
 
         await _orderRepository.UpdateAsync(order);
+        await _orderRepository.SaveAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await _orderRepository.DeleteAsync(id);
         await _orderRepository.SaveAsync();
     }
 }
