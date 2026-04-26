@@ -13,11 +13,13 @@ public class OrderServices : IOrderServices
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IProductRepository _productRepository;
+    private readonly IOrderItemRepository _orderItemRepository;
     private readonly IDiscountServices _discountServices;
-    public OrderServices(IOrderRepository orderRepository, IProductRepository productRepository, IDiscountServices discountServices)
+    public OrderServices(IOrderRepository orderRepository, IProductRepository productRepository, IOrderItemRepository orderItemRepository, IDiscountServices discountServices)
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
+        _orderItemRepository = orderItemRepository;
         _discountServices = discountServices;
     }
 
@@ -76,4 +78,39 @@ public class OrderServices : IOrderServices
         return orderCreatedDTO;
     }
 
+    public async Task UpdateAsync(int id, UpdateOrderDTO updateOrderDTO)
+    {
+        var order = await _orderRepository.GetByIdAsync(id)
+            ?? throw new CustomResponseException($"Pedido com Id {id} não encontrado.", 404);
+
+        order.OrderItems.Clear();
+        _orderItemRepository.DeleteByOrderId(order.Id);
+
+        List<OrderItem> updatedOrderItems = [];
+
+        foreach (var orderItemDto in updateOrderDTO.OrderItems)
+        {
+            var product = await _productRepository.GetByIdAsync(orderItemDto.ProductId)
+                ?? throw new CustomResponseException($"Produto com Id {orderItemDto.ProductId} não encontrado.", 404);
+
+            var updatedOrderItem = product.Adapt<OrderItem>();
+            updatedOrderItem.Quantity = orderItemDto.Quantity;
+
+            updatedOrderItems.Add(updatedOrderItem);
+        }
+
+        order.OrderItems = updatedOrderItems;
+
+        var limitPerCategoryExceeded = order.OrderItems.GroupBy(item => item.Category);
+
+        if (order.OrderItems.Any(item => item.Quantity > 1) || limitPerCategoryExceeded.Any(group => group.Count() > 1))
+            throw new CustomResponseException($"O pedido pode conter apenas um produto de cada categoria.", 400);
+
+        order.CalculateSubtotal();
+        order.Discount = _discountServices.CalculateDiscount(order);
+        order.CalculateTotalPrice();
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.SaveAsync();
+    }
 }

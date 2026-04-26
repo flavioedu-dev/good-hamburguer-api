@@ -5,4 +5,5 @@ namespace GoodHamburger.Domain.Interfaces.Repositories;
 
 public interface IOrderItemRepository : IBaseRepository<OrderItem>
 {
+    void DeleteByOrderId(int orderId);
 }

@@ -10,4 +10,10 @@ public class OrderItemRepository : BaseRepository<OrderItem>, IOrderItemReposito
     public OrderItemRepository(SqlDbContext context) : base(context)
     {
     }
+
+    public void DeleteByOrderId(int orderId)
+    {
+        var items = _context.OrderItems.Where(oi => oi.OrderId == orderId);
+        _context.OrderItems.RemoveRange(items);
+    }
 }

@@ -40,4 +40,10 @@ public class OrderController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateOrderDTO updateOrderDTO)
+    {
+        await _orderServices.UpdateAsync(id, updateOrderDTO);
+
+        return NoContent();
 }
