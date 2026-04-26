@@ -1,5 +1,5 @@
-﻿using GoodHamburger.Application.DTOs.Orders;
-using GoodHamburger.Application.DTOs.Orders.Requests;
+﻿using GoodHamburger.Application.DTOs.Order;
+using GoodHamburger.Application.DTOs.Order.Requests;
 using GoodHamburger.Application.Interfaces;
 using GoodHamburger.Domain.Entities;
 using GoodHamburger.Domain.Exceptions;

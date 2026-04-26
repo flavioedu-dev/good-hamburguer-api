@@ -1,4 +1,4 @@
-﻿using GoodHamburger.Application.DTOs.Orders;
+﻿using GoodHamburger.Application.DTOs.Order;
 using GoodHamburger.Domain.Entities;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;

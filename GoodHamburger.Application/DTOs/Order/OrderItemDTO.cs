@@ -1,6 +1,6 @@
 ﻿using GoodHamburger.Domain.Enums;
 
-namespace GoodHamburger.Application.DTOs.Orders;
+namespace GoodHamburger.Application.DTOs.Order;
 
 public record OrderItemDTO
 (

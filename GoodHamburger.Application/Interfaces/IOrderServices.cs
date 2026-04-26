@@ -1,5 +1,5 @@
-﻿using GoodHamburger.Application.DTOs.Orders;
-using GoodHamburger.Application.DTOs.Orders.Requests;
+﻿using GoodHamburger.Application.DTOs.Order;
+using GoodHamburger.Application.DTOs.Order.Requests;
 
 namespace GoodHamburger.Application.Interfaces;
 

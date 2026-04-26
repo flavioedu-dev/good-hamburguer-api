@@ -1,4 +1,4 @@
-﻿namespace GoodHamburger.Application.DTOs.Orders;
+﻿namespace GoodHamburger.Application.DTOs.Order;
 
 public record OrderDTO
 (

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using GoodHamburger.Application.DTOs.Orders.Requests;
+using GoodHamburger.Application.DTOs.Order.Requests;
 
 namespace GoodHamburger.API.Validators.Order;
 
